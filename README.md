@@ -28,3 +28,9 @@ npm run dev
 npm run build
 ```
 # CS4420FinalProject
+
+
+### Libraries for Compression for backend
+https://pypi.org/project/pynvcodec/
+https://pypi.org/project/filmcompress/
+https://pypi.org/project/CaaS/1.5/
