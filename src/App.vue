@@ -12,23 +12,32 @@ import TheWelcome from './components/TheWelcome.vue'
       <h2 class="upload">
         Upload File:
       </h2>
+      <div class="video">
+        <video id="videoplayer" width="400" height="200" controls style="position: absolute; top: 10px; left: 10px">
+        <source id="src" src="src/assets/stock.mp4">
+        </video>
+      </div>
       <div class="input">
         <input type="file" @change="uploadFile" ref="file">
-        <button @click="submitFile">Upload!</button>
+        <button class="uploadButton" @click="submitFile">Upload!</button>
       </div>
-    <div class="algorithms">
+     <div class="algorithms">
       <h2>
         Algorithm 1
       </h2>
+      <button id="actionButton" class="playButton" @click="loadAnotherVideo">Play</button>
       <h2>
         Algorithm 2
       </h2>
+      <button id="actionButton" class="playButton">Play</button>
       <h2>
         Algorithm 3
       </h2>
+      <button id="actionButton" class="playButton" @click="loadAnotherVideo">Play</button>
       <h2>
         Algorithm 4
       </h2>
+      <button id="actionButton" class="playButton" @click="loadAnotherVideo">Play</button>
     </div>
     </section>
     <div class="circle1"></div>
@@ -36,7 +45,39 @@ import TheWelcome from './components/TheWelcome.vue'
   </main>
 </template>
 
-<style scoped>
+<script>
+  import { defineComponent } from 'vue'
+  import { VideoPlayer } from '@videojs-player/vue'
+  import 'video.js/dist/video-js.css'
+
+  export default defineComponent({
+    components: {
+      VideoPlayer
+    }
+  })
+
+  window.onload = function() {
+    var button = document.getElementById("actionButton");
+
+    function loadAnotherVideo() {
+      var video = document.getElementById('videoplayer');
+      var source = document.getElementById('src');
+
+      source.src = 'src/assets/stock1.mp4';
+
+      video.load();
+      video.play();
+      
+      console.log({
+        source,video
+      });
+    }
+
+    button.onclick=loadAnotherVideo;
+  }
+</script>
+
+<style>
 .background {
   background: linear-gradient(
       to right bottom,
@@ -49,32 +90,40 @@ import TheWelcome from './components/TheWelcome.vue'
     overflow: hidden;
 }
 .input {
-  top: 140px;
-  left: 340px;
+  left: 550px;
+  top: 150px;
+}
+
+.video {
+  left: 30px;
 }
 
 .algorithms {
   top: 220px;
-  left: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
-}
-
-h2 {
-  margin: 0 50px;
 }
 
 input {
   color: black;
 }
 
-button {
+.uploadButton {
   background-color: rgba(25, 171, 255, 0.7);
   color: black;
   border-radius: 15px;
   border-color: rgba(25, 171, 255, 0.7);
   width: 90px;
+  height: 30px;
+}
+
+.playButton {
+  background-color: rgba(25, 171, 255, 0.7);
+  color: black;
+  border-radius: 15px;
+  border-color: rgba(25, 171, 255, 0.7);
+  width: 40px;
   height: 30px;
 }
 
@@ -88,12 +137,12 @@ button {
 }
 
 .upload {
-  top: 120px;
-  left: 370px;
+  top: 90px;
+  left: 620px;
   color: black;
 }
 .title {
-  top: 80px;
+  top: 20px;
   left: 250px;
   font-size: 3em;
   color: black;
@@ -120,13 +169,7 @@ button {
 h2 {
   color: black;
   font-size: 2.0rem;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  margin: 0 15px;
 }
 
 .circle1,
