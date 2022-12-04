@@ -1,6 +1,7 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
+import axios from 'axios'
 </script>
 
 <template>
@@ -37,7 +38,7 @@ import TheWelcome from './components/TheWelcome.vue'
       <h2>
         Algorithm 4
       </h2>
-      <button id="actionButton" class="playButton" @click="loadAnotherVideo">Play</button>
+      <button id="backendButton" class="playButton" @click="loadAnotherVideo">Play</button>
     </div>
     </section>
     <div class="circle1"></div>
@@ -53,11 +54,37 @@ import TheWelcome from './components/TheWelcome.vue'
   export default defineComponent({
     components: {
       VideoPlayer
+    },
+    methods: {
+        getMessage() {
+        const path = 'http://127.0.0.1:5000/hello/';
+        axios.get(path)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+      },
     }
   })
 
   window.onload = function() {
     var button = document.getElementById("actionButton");
+    var backEndButton = document.getElementById("backendButton");
+
+    function testBackEnd() {
+      const path = 'http://127.0.0.1:5000/hello/';
+        axios.get(path)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+    }
 
     function loadAnotherVideo() {
       var video = document.getElementById('videoplayer');
@@ -74,6 +101,7 @@ import TheWelcome from './components/TheWelcome.vue'
     }
 
     button.onclick=loadAnotherVideo;
+    backEndButton.onclick=testBackEnd;
   }
 </script>
 

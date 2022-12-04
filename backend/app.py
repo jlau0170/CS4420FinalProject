@@ -2,15 +2,16 @@ from flask import Flask
 import urllib.request
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
-from CaaS import video_compression
+#from CaaS import video_compression
 import time
+import requests
+import json
 
 app = Flask(__name__)
 
 @app.route('/hello/', methods=['GET', 'POST'])
 def welcome():
     return "Hello World!"
-
 
 @app.route('/upload_video/', methods=['POST'])
 def upload_video():
@@ -29,20 +30,20 @@ def upload_video():
         return render_template('upload.html', filename=filename)
 
 
-@app.route('/h264/', methods=['POST'])
-def compress_h264():
+#@app.route('/h264/', methods=['POST'])
+#def compress_h264():
 
 
-@app.route('/spc/', methods=['POST'])
-def compress_spc():
+#@app.route('/spc/', methods=['POST'])
+#def compress_spc():
     
 
-@app.route('/h265/', methods=['POST'])
-def compress_h265():
+#@app.route('/h265/', methods=['POST'])
+#def compress_h265():
     
 
-@app.route('/av1/', methods=['POST'])
-def compress_av1():
+#@app.route('/av1/', methods=['POST'])
+#def compress_av1():
     
 
 
