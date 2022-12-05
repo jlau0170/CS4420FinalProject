@@ -40,6 +40,53 @@ import axios from 'axios'
       </h2>
       <button id="backendButton" class="playButton" @click="loadAnotherVideo">Play</button>
     </div>
+    <div class="stats">
+      <div class="individualStats">
+        <h3>
+          PSNR:
+        </h3>
+        <h3>
+          Runtime:
+        </h3>
+        <h3>
+          Compression Ratio:
+        </h3>
+      </div>
+      <div class="individualStats">
+        <h3>
+          PSNR:
+        </h3>
+        <h3>
+          Runtime:
+        </h3>
+        <h3>
+          Compression Ratio:
+        </h3>
+      </div>
+      <div class="individualStats">
+        <h3>
+          PSNR:
+        </h3>
+        <h3>
+          Runtime:
+        </h3>
+        <h3>
+          Compression Ratio:
+        </h3>
+      </div>
+      <div class="individualStats">
+        <h3>
+          PSNR:
+        </h3>
+        <h3>
+          Runtime:
+        </h3>
+        <h3>
+          Compression Ratio:
+        </h3>
+      </div>
+    </div>
+
     </section>
     <div class="circle1"></div>
     <div class="circle2"></div>
@@ -213,6 +260,24 @@ h2 {
   color: black;
   font-size: 2.0rem;
   margin: 0 15px;
+}
+
+h3 {
+  color: black;
+  font-size: 1.2rem;
+  margin: 0 37px;
+}
+
+.stats {
+  display: flex;
+  flex-direction: row;
+  top: 250px;
+  left: 3px;
+}
+
+.individualStats {
+  display: flex;
+  flex-direction: column;
 }
 
 .circle1,
