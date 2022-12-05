@@ -19,8 +19,8 @@ import axios from 'axios'
         </video>
       </div>
       <div class="input">
-        <input type="file" @change="uploadFile" ref="file">
-        <button class="uploadButton" @click="submitFile">Upload!</button>
+        <input id="file" type="file" @change="uploadFile" ref="file">
+        <button id="uploadActionButton" class="uploadButton" @click="submitFile">Upload!</button>
       </div>
      <div class="algorithms">
       <h2>
@@ -54,26 +54,16 @@ import axios from 'axios'
   export default defineComponent({
     components: {
       VideoPlayer
-    },
-    methods: {
-        getMessage() {
-        const path = 'http://127.0.0.1:5000/hello/';
-        axios.get(path)
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((error) => {
-            // eslint-disable-next-line
-            console.error(error);
-          });
-      },
     }
   })
 
   window.onload = function() {
     var button = document.getElementById("actionButton");
     var backEndButton = document.getElementById("backendButton");
+    var fileUpload = document.getElementById("file");
+    var uploadButton = document.getElementById("uploadActionButton");
 
+    //hello world
     function testBackEnd() {
       const path = 'http://127.0.0.1:5000/hello/';
         axios.get(path)
@@ -86,6 +76,21 @@ import axios from 'axios'
           });
     }
 
+
+    //upload video
+    function uploadVideo() {
+      const path = 'http://127.0.0.1:5000/upload_video/';
+        axios.post(path)
+          .then(() => {
+            console.log("success");
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+    }
+
+    //load new video onto player
     function loadAnotherVideo() {
       var video = document.getElementById('videoplayer');
       var source = document.getElementById('src');
@@ -102,6 +107,16 @@ import axios from 'axios'
 
     button.onclick=loadAnotherVideo;
     backEndButton.onclick=testBackEnd;
+    uploadButton.onclick=uploadVideo;
+    fileUpload.onchange = function(event) {
+      var file = fileUpload.files;
+      if(file) {
+        console.log("success");
+      }
+      else {
+        console.log("fail");
+      }
+    }
   }
 </script>
 
