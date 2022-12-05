@@ -110,6 +110,8 @@ import axios from 'axios'
     var fileUpload = document.getElementById("file");
     var uploadButton = document.getElementById("uploadActionButton");
 
+    var uploadBool = false;
+
     //hello world
     function testBackEnd() {
       const path = 'http://127.0.0.1:5000/hello/';
@@ -126,6 +128,7 @@ import axios from 'axios'
 
     //upload video
     function uploadVideo() {
+      uploadBool = true;
       const path = 'http://127.0.0.1:5000/upload_video/';
         axios.post(path)
           .then(() => {
@@ -139,17 +142,24 @@ import axios from 'axios'
 
     //load new video onto player
     function loadAnotherVideo() {
-      var video = document.getElementById('videoplayer');
-      var source = document.getElementById('src');
+      if(uploadBool) {
+        var video = document.getElementById('videoplayer');
+        var source = document.getElementById('src');
 
-      source.src = 'src/assets/stock1.mp4';
+        source.src = 'src/assets/stock1.mp4';
 
-      video.load();
-      video.play();
-      
-      console.log({
-        source,video
-      });
+        video.load();
+        video.play();
+        
+        console.log({
+          source,video
+        });
+      }
+      else {
+        console.log(
+          "fail"
+        );
+      }
     }
 
     button.onclick=loadAnotherVideo;
