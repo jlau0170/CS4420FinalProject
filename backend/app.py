@@ -17,13 +17,16 @@ def welcome():
 
 @app.route('/upload-video', methods=['POST'])
 def upload_video():
+
+    print("hello")
+    print(request.files)
     # Get the file from the POST request
-    file = request.files['file']
+    file = request.files['video']
 
     # Save the file to the specified location
     file.save('videos/' + "input.mp4")
 
-    return render_template('index.html')
+    return "200"
 
 
 def PSNR(compressed_video, original_video):

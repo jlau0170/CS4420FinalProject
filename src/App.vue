@@ -19,8 +19,10 @@ import axios from 'axios'
         </video>
       </div>
       <div class="input">
-        <input id="file" type="file" @change="uploadFile" ref="file">
+        <form id="uploadForm" enctype="multipart/form-data" v-on:change="uploadFile">
+        <input id="file" type="file" @change="uploadFile">
         <button id="uploadActionButton" class="uploadButton" @click="submitFile">Upload!</button>
+        </form>
       </div>
      <div class="algorithms">
       <h2>
@@ -109,12 +111,12 @@ import axios from 'axios'
     var backEndButton = document.getElementById("backendButton");
     var fileUpload = document.getElementById("file");
     var uploadButton = document.getElementById("uploadActionButton");
-
+    var file = new File(['src/assets/stock1.mp4'], 'video.mp4', { type: 'video/mp4' });
     var uploadBool = false;
 
     //hello world
     function testBackEnd() {
-      const path = 'http://127.0.0.1:5000/hello/';
+      const path = 'http://10.2.58.153:105/compress-video/mpeg4';
         axios.get(path)
           .then((res) => {
             console.log(res.data);
@@ -129,15 +131,16 @@ import axios from 'axios'
     //upload video
     function uploadVideo() {
       uploadBool = true;
-      const path = 'http://127.0.0.1:5000/upload_video/';
-        axios.post(path)
-          .then(() => {
-            console.log("success");
-          })
-          .catch((error) => {
-            // eslint-disable-next-line
-            console.error(error);
-          });
+      const path = 'http://10.2.58.153:105/upload-video';
+      var formData = new FormData();
+      var videofile = document.querySelector('#file');
+      formData.append("video", videofile.files[0]);
+      axios.post(path, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+      })
+
     }
 
     //load new video onto player
@@ -146,7 +149,7 @@ import axios from 'axios'
         var video = document.getElementById('videoplayer');
         var source = document.getElementById('src');
 
-        source.src = 'src/assets/stock1.mp4';
+        source.src = 'src/videos/output.mp4';
 
         video.load();
         video.play();
@@ -166,7 +169,8 @@ import axios from 'axios'
     backEndButton.onclick=testBackEnd;
     uploadButton.onclick=uploadVideo;
     fileUpload.onchange = function(event) {
-      var file = fileUpload.files;
+
+
       if(file) {
         console.log("success");
       }
