@@ -15,75 +15,75 @@ import axios from 'axios'
       </h2>
       <div class="video">
         <video id="videoplayer" width="400" height="200" controls style="position: absolute; top: 10px; left: 10px">
-        <source id="src" src="src/assets/stock.mp4">
+        <source id="src" src="src/assets/input.mp4">
         </video>
       </div>
       <div class="input">
         <form id="uploadForm" enctype="multipart/form-data" v-on:change="uploadFile">
         <input id="file" type="file" @change="uploadFile">
-        <button id="uploadActionButton" class="uploadButton" @click="submitFile">Upload!</button>
+        <button id="uploadActionButton" type = "button" class="uploadButton">Upload!</button>
         </form>
       </div>
      <div class="algorithms">
       <h2>
-        Algorithm 1
+        MPEG4
       </h2>
-      <button id="actionButton" class="playButton" @click="loadAnotherVideo">Play</button>
+      <button id="mpeg4" class="playButton" @click="loadAnotherVideo">Run</button>
       <h2>
-        Algorithm 2
+        h265
       </h2>
-      <button id="actionButton" class="playButton">Play</button>
+      <button id="h265" class="playButton">Run</button>
       <h2>
-        Algorithm 3
+        MPEG2
       </h2>
-      <button id="actionButton" class="playButton" @click="loadAnotherVideo">Play</button>
+      <button id="mpeg2" class="playButton" @click="loadAnotherVideo">Run</button>
       <h2>
-        Algorithm 4
+        h264
       </h2>
-      <button id="backendButton" class="playButton" @click="loadAnotherVideo">Play</button>
+      <button id="h264" class="playButton" @click="loadAnotherVideo">Run</button>
     </div>
     <div class="stats">
       <div class="individualStats">
-        <h3>
+        <h3 id = "mpeg4psnr">
           PSNR:
         </h3>
-        <h3>
+        <h3 id = "mpeg4runtime">
           Runtime:
         </h3>
-        <h3>
+        <h3 id = "mpeg4ratio">
           Compression Ratio:
         </h3>
       </div>
       <div class="individualStats">
-        <h3>
+        <h3 id = "h265psnr">
           PSNR:
         </h3>
-        <h3>
+        <h3 id = "h265runtime">
           Runtime:
         </h3>
-        <h3>
+        <h3 id = "h265ratio">
           Compression Ratio:
         </h3>
       </div>
       <div class="individualStats">
-        <h3>
+        <h3 id = "mpeg2psnr">
           PSNR:
         </h3>
-        <h3>
+        <h3 id = "mpeg2runtime">
           Runtime:
         </h3>
-        <h3>
+        <h3 id = "mpeg2ratio">
           Compression Ratio:
         </h3>
       </div>
       <div class="individualStats">
-        <h3>
+        <h3 id = "h264psnr">
           PSNR:
         </h3>
-        <h3>
+        <h3 id = "h264runtime">
           Runtime:
         </h3>
-        <h3>
+        <h3 id = "h264ratio">
           Compression Ratio:
         </h3>
       </div>
@@ -107,7 +107,10 @@ import axios from 'axios'
   })
 
   window.onload = function() {
-    var button = document.getElementById("actionButton");
+    var h265Button = document.getElementById("h265");
+    var mpeg4Button = document.getElementById("mpeg4");
+    var mpeg2Button = document.getElementById("mpeg2");
+    var h264Button = document.getElementById("h264");
     var backEndButton = document.getElementById("backendButton");
     var fileUpload = document.getElementById("file");
     var uploadButton = document.getElementById("uploadActionButton");
@@ -115,11 +118,60 @@ import axios from 'axios'
     var uploadBool = false;
 
     //hello world
-    function testBackEnd() {
-      const path = 'http://10.2.58.153:105/compress-video/mpeg4';
+
+    function h265Function() {
+      const path = 'http://localhost:105/compress-video/h265';
         axios.get(path)
           .then((res) => {
             console.log(res.data);
+            document.getElementById("h265psnr").innerHTML = "PSNR: " + parseFloat(res.data["psnr"]).toFixed(2);
+            document.getElementById("h265runtime").innerHTML = "Runtime: " + parseFloat(res.data["compression_time"]).toFixed(2) + " seconds";
+            document.getElementById("h265ratio").innerHTML = "Compression Ratio: " + parseFloat(res.data["compression_ratio"]).toFixed(2);
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+    }
+
+    function h264Function() {
+      const path = 'http://localhost:105/compress-video/h264';
+        axios.get(path)
+          .then((res) => {
+            console.log(res.data);
+            document.getElementById("h264psnr").innerHTML = "PSNR: " + parseFloat(res.data["psnr"]).toFixed(2);
+            document.getElementById("h264runtime").innerHTML = "Runtime: " + parseFloat(res.data["compression_time"]).toFixed(2) + " seconds";
+            document.getElementById("h264ratio").innerHTML = "Compression Ratio: " + parseFloat(res.data["compression_ratio"]).toFixed(2);
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+    }
+
+    function mpeg4Function() {
+      const path = 'http://localhost:105/compress-video/mpeg4';
+        axios.get(path)
+          .then((res) => {
+            console.log(res.data);
+            document.getElementById("mpeg4psnr").innerHTML = "PSNR: " + parseFloat(res.data["psnr"]).toFixed(2);
+            document.getElementById("mpeg4runtime").innerHTML = "Runtime: " + parseFloat(res.data["compression_time"]).toFixed(2) + " seconds";
+            document.getElementById("mpeg4ratio").innerHTML = "Compression Ratio: " + parseFloat(res.data["compression_ratio"]).toFixed(2);
+          })
+          .catch((error) => {
+            // eslint-disable-next-line
+            console.error(error);
+          });
+    }
+
+    function mpeg2Function() {
+      const path = 'http://localhost:105/compress-video/mpeg2';
+        axios.get(path)
+          .then((res) => {
+            console.log(res.data);
+            document.getElementById("mpeg2psnr").innerHTML = "PSNR: " + parseFloat(res.data["psnr"]).toFixed(2);
+            document.getElementById("mpeg2runtime").innerHTML = "Runtime: " + parseFloat(res.data["compression_time"]).toFixed(2) + " seconds";
+            document.getElementById("mpeg2ratio").innerHTML = "Compression Ratio: " + parseFloat(res.data["compression_ratio"]).toFixed(2);
           })
           .catch((error) => {
             // eslint-disable-next-line
@@ -131,9 +183,10 @@ import axios from 'axios'
     //upload video
     function uploadVideo() {
       uploadBool = true;
-      const path = 'http://10.2.58.153:105/upload-video';
+      const path = 'http://localhost:105/upload-video';
       var formData = new FormData();
       var videofile = document.querySelector('#file');
+      console.log(videofile);
       formData.append("video", videofile.files[0]);
       axios.post(path, formData, {
           headers: {
@@ -165,9 +218,11 @@ import axios from 'axios'
       }
     }
 
-    button.onclick=loadAnotherVideo;
-    backEndButton.onclick=testBackEnd;
     uploadButton.onclick=uploadVideo;
+    h265Button.onclick = h265Function;
+    h264Button.onclick = h264Function;
+    mpeg2Button.onclick = mpeg2Function;
+    mpeg4Button.onclick = mpeg4Function;
     fileUpload.onchange = function(event) {
 
 
@@ -273,7 +328,7 @@ input {
 h2 {
   color: black;
   font-size: 2.0rem;
-  margin: 0 15px;
+  margin: 0 50px;
 }
 
 h3 {
@@ -310,7 +365,7 @@ h3 {
 
 .circle1 {
   top: 5%;
-  right: 10%;
+  right: 20%;
 }
 .circle2 {
   top: 5%;
